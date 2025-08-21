@@ -1,0 +1,13 @@
+# PyCharm
+.idea/
+*.iml
+
+# Python (even though you're not using it)
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# System files
+.DS_Store
+Thumbs.db

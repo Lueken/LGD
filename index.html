@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Systems Design - Lueken Good Design</title>
+    <!--
+      The font stack is purposeful: a strong serif for headers and
+      a clean monospace for the body to represent the contrast
+      between big ideas and precise, clean execution.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Space Mono', monospace;
+        }
+        h1, h2 {
+            font-family: 'Lora', serif;
+        }
+
+        /* Subtle animation for on-scroll reveal */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(2rem);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .reveal-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Just to make the scroll a bit nicer for the reveal effect */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-[#1a1a1a] text-[#f5f5f5] leading-relaxed antialiased">
+
+    <header class="max-w-5xl mx-auto px-6 py-24 sm:py-32 lg:py-48 text-center border-b border-gray-600">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 lg:mb-6">
+            <span class="text-[#8FA68E] block mt-2">Sustainable Systems.</span>
+            <span class="text-gray-400 block mt-2">Built for Longevity & Evolution.</span>
+            <span class="text-white block mt-2">Human-Centered.</span>
+        </h1>
+      <p class="mt-6 text-2xl font-semibold text-gray-300 reveal-element">
+          Crafting digital foundations that endure.
+      </p>
+        <p class="mt-8 text-xl max-w-2xl mx-auto text-gray-400 reveal-element">
+            I believe that great design is not about what we see, but about what we don’t.
+            It is the quiet, elegant efficiency of a well-defined system, processes that endure, and a profound respect for a future developer's time.
+        </p>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-16 sm:py-24">
+        <!--
+          Instead of a simple div, we're using a background and padding to
+          give each section a distinct visual weight.
+        -->
+        <section id="service-one" class="py-16 border-b border-gray-600 reveal-element">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-[#8FA68E]">The Blueprint for Growth: Website Architecture & Implementation</h2>
+            <p class="text-xl max-w-prose text-gray-300">
+                A website is more than just a front-end. It's a system for future growth. I design and implement architectures that are modular, scalable, and easy to maintain. My focus is on creating a clear, purposeful foundation that can evolve with your business without becoming a tangled mess.
+            </p>
+        </section>
+
+        <section id="service-two" class="py-16 border-b border-gray-600 reveal-element">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-[#8FA68E]">The Language of Clarity: Actionable & Lasting Analytics</h2>
+            <p class="text-xl max-w-prose text-gray-300">
+                Data is only useful if it tells a story. I review and restructure analytics workflows to move past raw numbers and into actionable insight. This process involves engineering cleaner pipelines and defining what metrics truly matter, ensuring your team has the information it needs, and nothing it doesn't.
+            </p>
+        </section>
+
+        <section id="service-three" class="py-16 border-b border-gray-600 reveal-element">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-[#8FA68E]">The Unseen Migration: Robust Database Systems & Logic</h2>
+            <p class="text-xl max-w-prose text-gray-300">
+                The most important part of a system often goes unnoticed: the database. I specialize in database migration and optimization, refactoring legacy data systems into clean, powerful, and secure foundations. The goal is to create a seamless transition that improves performance and reduces future technical debt.
+            </p>
+        </section>
+
+        <!-- A new, purposeful call-to-action section that prompts for a conversation. -->
+        <section id="contact" class="pt-16 reveal-element">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-[#8FA68E]">Let's Talk Systems</h2>
+            <p class="text-xl max-w-prose text-gray-300">
+                If your project is about solving a meaningful problem, streamlining a complex process, or building something that will last, I’m available. Tell me about the challenge you're facing.
+            </p>
+            <a href="mailto:systems@lueken-good.design" class="mt-4 text-2xl font-bold text-[#8FA68E] hover:text-[#EF4444] transition-colors duration-200 inline-block">systems@lueken-good.design</a>
+        </section>
+    </main>
+
+    <footer class="max-w-4xl mx-auto px-6 py-12 text-center text-sm text-gray-400 border-t border-gray-600 mt-24">
+        <p>&copy; 2024. All systems nominal.</p>
+    </footer>
+
+    <script>
+        // Simple JS to add a class on scroll for the reveal effect.
+        // It's a system that adds a state (is-visible) when conditions are met.
+        document.addEventListener("DOMContentLoaded", () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Unobserve once it's visible.
+                    }
+                });
+            }, {
+                rootMargin: "0px",
+                threshold: 0.2 // Trigger when 20% of the element is visible
+            });
+
+            // Iterate over all elements we want to reveal
+            document.querySelectorAll('.reveal-element').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
