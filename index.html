@@ -3,126 +3,627 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sustainable Systems Design - Lueken Good Design</title>
-    <!--
-      The font stack is purposeful: a strong serif for headers and
-      a clean monospace for the body to represent the contrast
-      between big ideas and precise, clean execution.
-    -->
+    <title>Lueken Good Design | Custom Web Design & Software Development</title>
+    <meta name="description" content="Custom web design, application development, and sustainable systems built for longevity. Personal attention, no templates, real results.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Lueken Good Design | Custom Web Design & Software Development">
+    <meta property="og:description" content="Custom web design, application development, and sustainable systems built for longevity.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lueken-good.design">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Space+Mono&display=swap" rel="stylesheet">
-    <!-- Load Tailwind CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
+        :root {
+            --color-dark: #1a1a1a;
+            --color-dark-lighter: #242424;
+            --color-sage: #8FA68E;
+            --color-sage-dark: #6B8069;
+            --color-light: #f5f5f5;
+            --color-muted: #a0a0a0;
+            --color-border: #333333;
+        }
+
         body {
             font-family: 'Space Mono', monospace;
+            background-color: var(--color-dark);
+            color: var(--color-light);
         }
-        h1, h2 {
+
+        h1, h2, h3, h4 {
             font-family: 'Lora', serif;
         }
 
-        /* Subtle animation for on-scroll reveal */
-        .reveal-element {
+        /* Scroll reveal animation */
+        .reveal {
             opacity: 0;
-            transform: translateY(2rem);
+            transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-            will-change: opacity, transform;
         }
 
-        .reveal-element.is-visible {
+        .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Just to make the scroll a bit nicer for the reveal effect */
+        /* Stagger delays */
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* Smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-sage-dark);
+        }
+
+        /* Button hover effect */
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* Portfolio card hover */
+        .portfolio-card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Service card accent line */
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--color-sage);
+            transition: height 0.4s ease;
+        }
+        .service-card:hover::before {
+            height: 100%;
+        }
+
+        /* Form focus states */
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-sage);
+            box-shadow: 0 0 0 3px rgba(143, 166, 142, 0.2);
+        }
+
+        /* Testimonial quote styling */
+        .quote-mark {
+            font-family: 'Lora', serif;
+            font-size: 6rem;
+            line-height: 1;
+            color: var(--color-sage);
+            opacity: 0.3;
+        }
+
+        /* Browser frame for portfolio */
+        .browser-frame {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .browser-dots {
+            display: flex;
+            gap: 6px;
+            padding: 12px 16px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #333;
+        }
+        .browser-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .browser-dots span:nth-child(1) { background: #ff5f57; }
+        .browser-dots span:nth-child(2) { background: #febc2e; }
+        .browser-dots span:nth-child(3) { background: #28c840; }
     </style>
 </head>
-<body class="bg-[#1a1a1a] text-[#f5f5f5] leading-relaxed antialiased">
+<body class="antialiased">
 
-    <nav class="max-w-5xl mx-auto px-6 pt-8 pb-4 text-center">
-        <p class="uppercase tracking-widest text-sm text-gray-400">Lueken Good Design</p>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-[#333]">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-sm uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">
+                Lueken Good Design
+            </a>
+            <div class="flex gap-8">
+                <a href="#work" class="text-sm text-gray-400 hover:text-[#8FA68E] transition-colors">Work</a>
+                <a href="#services" class="text-sm text-gray-400 hover:text-[#8FA68E] transition-colors">Services</a>
+                <a href="#contact" class="text-sm text-gray-400 hover:text-[#8FA68E] transition-colors">Contact</a>
+            </div>
+        </div>
     </nav>
 
-    <header class="max-w-5xl mx-auto px-6 py-12 sm:py-20 lg:py-32 text-center border-b border-gray-600">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 lg:mb-6">
-            <span class="text-[#8FA68E] block mt-2">Sustainable Systems.</span>
-            <span class="text-gray-400 block mt-2">Built for Longevity & Evolution.</span>
-            <span class="text-white block mt-2">Human-Centered.</span>
-        </h1>
-        <p class="mt-6 text-2xl font-semibold text-gray-300 reveal-element">
-            Crafting digital foundations that endure.
-        </p>
-        <p class="mt-8 text-xl max-w-2xl mx-auto text-gray-400 reveal-element">
-            I believe that great design is not about what we see, but about what we don't.
-            It is the quiet, elegant efficiency of well-defined systems, processes that endure, and a profound respect for a future developer's time.
-        </p>
+    <!-- Hero Section -->
+    <header class="min-h-screen flex items-center pt-20">
+        <div class="max-w-6xl mx-auto px-6 py-20">
+            <div class="max-w-4xl">
+                <p class="text-[#8FA68E] text-sm uppercase tracking-[0.3em] mb-6 reveal">Web Design & Development</p>
+
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-semibold leading-tight mb-8 reveal reveal-delay-1">
+                    I build digital systems
+                    <span class="text-[#8FA68E]"> that last.</span>
+                </h1>
+
+                <p class="text-xl text-gray-400 max-w-2xl mb-12 leading-relaxed reveal reveal-delay-2">
+                    Custom websites and applications with personal attention.
+                    No templates. No anonymous support tickets.
+                    Just solutions built for longevity.
+                </p>
+
+                <div class="flex flex-wrap gap-4 reveal reveal-delay-3">
+                    <a href="#work" class="btn-primary inline-flex items-center gap-2 bg-[#8FA68E] text-[#1a1a1a] px-8 py-4 font-bold text-sm uppercase tracking-wider hover:bg-[#6B8069] transition-colors">
+                        View Work
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                    </a>
+                    <a href="#contact" class="inline-flex items-center gap-2 border border-gray-600 text-gray-300 px-8 py-4 font-bold text-sm uppercase tracking-wider hover:border-[#8FA68E] hover:text-[#8FA68E] transition-colors">
+                        Let's Talk
+                    </a>
+                </div>
+
+                <!-- Proof indicator -->
+                <div class="mt-16 pt-8 border-t border-[#333] reveal reveal-delay-3">
+                    <div class="flex items-center gap-6 text-sm text-gray-500">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-[#8FA68E] rounded-full"></span>
+                            <span>SaaS platform in production</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-[#8FA68E] rounded-full"></span>
+                            <span>Full-stack from database to UI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-6 py-16 sm:py-24">
-        <!--
-          Instead of a simple div, we're using a background and padding to
-          give each section a distinct visual weight.
-        -->
-        <section id="service-one" class="py-16 border-b border-gray-600 reveal-element">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-[#8FA68E]">Blueprints for Growth: Website Architecture & Implementation</h2>
-            <p class="text-xl max-w-prose text-gray-300">
-                A website is more than just a front-end. It's a system for future growth. I build modular, scalable architectures that remain easy to maintain. My focus is on creating a clear, purposeful foundation that can evolve with your business without becoming a tangled mess.
-            </p>
-        </section>
+    <!-- Portfolio Section -->
+    <section id="work" class="py-24 bg-[#141414]">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="mb-16 reveal">
+                <p class="text-[#8FA68E] text-sm uppercase tracking-[0.3em] mb-4">Selected Work</p>
+                <h2 class="text-4xl sm:text-5xl font-semibold">Projects that ship.</h2>
+            </div>
 
-        <section id="service-two" class="py-16 border-b border-gray-600 reveal-element">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-[#8FA68E]">Speaking Data Clearly: Actionable & Lasting Analytics</h2>
-            <p class="text-xl max-w-prose text-gray-300">
-                Data is only valuable when it tells your story - and drives your decisions. I review and restructure analytics workflows to move past raw numbers and into actionable insight. I design pipelines that surface only the metrics that matter — the ones your team can actually act on.
-            </p>
-        </section>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Project 1: Aisle to Islands -->
+                <a href="https://aisle-to-islands.com" target="_blank" rel="noopener" class="portfolio-card block bg-[#1a1a1a] border border-[#333] reveal">
+                    <div class="browser-frame">
+                        <div class="browser-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <img src="images/portfolio/AnI.png" alt="Aisle to Islands - Luxury destination wedding planning website" class="w-full aspect-video object-cover object-top">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Aisle to Islands</h3>
+                        <p class="text-gray-400 text-sm mb-4">Luxury destination wedding and honeymoon planning. Complete brand identity, custom design system, SEO optimization.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Custom Design</span>
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">SEO</span>
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Performance</span>
+                        </div>
+                        <span class="text-[#8FA68E] text-sm inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Visit Site
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </span>
+                    </div>
+                </a>
 
-        <section id="service-three" class="py-16 border-b border-gray-600 reveal-element">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-[#8FA68E]">Unseen but Essential: Robust Database Systems & Logic</h2>
-            <p class="text-xl max-w-prose text-gray-300">
-                The most important part of a system often goes unnoticed: the database. I specialize in database migration and optimization, refactoring legacy data systems into clean, powerful, and secure foundations. The goal is to create a seamless transition that improves performance and reduces technical debt — both today and tomorrow.
-            </p>
-        </section>
+                <!-- Project 2: Mise en Place -->
+                <a href="https://mise-en-place.recipes" target="_blank" rel="noopener" class="portfolio-card block bg-[#1a1a1a] border border-[#333] reveal reveal-delay-1">
+                    <div class="browser-frame">
+                        <div class="browser-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <img src="images/portfolio/mise.png" alt="Mise en Place - Recipe management and meal planning application" class="w-full aspect-video object-cover object-top">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Mise en Place</h3>
+                        <p class="text-gray-400 text-sm mb-4">Recipe management and meal planning SaaS. Full-stack application with AI features, multi-theme system, complex UI.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Full-Stack</span>
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">SaaS</span>
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">AI Integration</span>
+                        </div>
+                        <span class="text-[#8FA68E] text-sm inline-flex items-center gap-2">
+                            Visit Site
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
 
-        <!-- A new, purposeful call-to-action section that prompts for a conversation. -->
-        <section id="contact" class="pt-16 reveal-element">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-[#8FA68E]">Let's Talk Systems</h2>
-            <p class="text-xl max-w-prose text-gray-300">
-                If your project is about solving a meaningful problem, streamlining a complex process, or building something that will last, I'm available. I'd love to hear about the challenge you're facing.
-            </p>
-            <a href="mailto:systems@lueken-good.design" class="mt-4 text-2xl font-bold text-[#8FA68E] hover:text-[#EF4444] transition-colors duration-200 inline-block">systems@lueken-good.design</a>
-        </section>
-    </main>
+    <!-- Services Section -->
+    <section id="services" class="py-24">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="mb-16 reveal">
+                <p class="text-[#8FA68E] text-sm uppercase tracking-[0.3em] mb-4">Services</p>
+                <h2 class="text-4xl sm:text-5xl font-semibold">What I build.</h2>
+            </div>
 
-    <footer class="max-w-4xl mx-auto px-6 py-12 text-center text-sm text-gray-400 border-t border-gray-600 mt-24">
-        <p>&copy; 2024 Lueken Good Design. All systems nominal.</p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card relative bg-[#1a1a1a] border border-[#333] p-8 reveal">
+                    <div class="w-12 h-12 bg-[#8FA68E]/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-[#8FA68E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Web Design & Development</h3>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        Custom websites that reflect your brand. No templates, no page builders.
+                        Hand-crafted code that performs and converts.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            Complete brand integration
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            SEO & performance optimization
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            Mobile-first responsive design
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card relative bg-[#1a1a1a] border border-[#333] p-8 reveal reveal-delay-1">
+                    <div class="w-12 h-12 bg-[#8FA68E]/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-[#8FA68E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Application Development</h3>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        Full-stack web applications and SaaS products.
+                        From concept to production with modern, maintainable architecture.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            Database design & optimization
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            API development & integration
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            Authentication & security
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card relative bg-[#1a1a1a] border border-[#333] p-8 reveal reveal-delay-2">
+                    <div class="w-12 h-12 bg-[#8FA68E]/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-[#8FA68E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Systems & Data</h3>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        Database architecture, analytics pipelines, and infrastructure.
+                        The invisible foundation that makes everything else work.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            Database migration & optimization
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            Analytics implementation
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            Performance monitoring
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Approach Section -->
+    <section class="py-24 bg-[#141414]">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center reveal">
+                <p class="text-[#8FA68E] text-sm uppercase tracking-[0.3em] mb-4">Approach</p>
+                <h2 class="text-4xl sm:text-5xl font-semibold mb-8">Not an agency. Not a template.</h2>
+                <p class="text-xl text-gray-400 leading-relaxed mb-12">
+                    I believe that great design is not about what we see, but about what we don't.
+                    It's the quiet efficiency of well-defined systems, processes that endure,
+                    and solutions that remain maintainable and adaptable as your needs evolve.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mt-16">
+                <div class="text-center reveal">
+                    <div class="text-5xl font-bold text-[#8FA68E] mb-4">01</div>
+                    <h3 class="text-lg font-semibold mb-2">Personal Attention</h3>
+                    <p class="text-gray-400 text-sm">You work directly with me. No account managers, no handoffs, no surprises.</p>
+                </div>
+                <div class="text-center reveal reveal-delay-1">
+                    <div class="text-5xl font-bold text-[#8FA68E] mb-4">02</div>
+                    <h3 class="text-lg font-semibold mb-2">Built to Last</h3>
+                    <p class="text-gray-400 text-sm">Code that's maintainable, documented, and designed for the long term.</p>
+                </div>
+                <div class="text-center reveal reveal-delay-2">
+                    <div class="text-5xl font-bold text-[#8FA68E] mb-4">03</div>
+                    <h3 class="text-lg font-semibold mb-2">No Lock-In</h3>
+                    <p class="text-gray-400 text-sm">You own your code, your data, your domain. Full transparency, always.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-24">
+        <div class="max-w-4xl mx-auto px-6 reveal">
+            <div class="relative bg-[#1a1a1a] border border-[#333] p-12 md:p-16">
+                <span class="quote-mark absolute top-4 left-6">"</span>
+                <blockquote class="relative z-10">
+                    <p class="text-xl md:text-2xl text-gray-300 leading-relaxed mb-8 font-['Lora'] italic">
+                        Working with Lueken Good Design transformed how I present my business online.
+                        The attention to detail, the thoughtful systems, and the personal
+                        attention made all the difference. My site isn't just beautiful - it actually works.
+                    </p>
+                    <footer class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-[#8FA68E]/20 rounded-full flex items-center justify-center">
+                            <span class="text-[#8FA68E] font-semibold">JL</span>
+                        </div>
+                        <div>
+                            <cite class="not-italic font-semibold text-white">Jessica</cite>
+                            <p class="text-sm text-gray-500">Founder, Aisle to Islands</p>
+                        </div>
+                    </footer>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-[#141414]">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <p class="text-[#8FA68E] text-sm uppercase tracking-[0.3em] mb-4">Get in Touch</p>
+                <h2 class="text-4xl sm:text-5xl font-semibold mb-6">Let's Talk</h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    If your project is about solving a meaningful problem or building something that will last,
+                    I'd love to hear about it.
+                </p>
+            </div>
+
+            <!-- Contact Form -->
+            <div id="contact-form-wrapper" class="max-w-2xl mx-auto reveal">
+            <form id="contact-form" action="https://formspree.io/f/mdanbjjo" method="POST">
+                <!-- Honeypot field for spam protection -->
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block text-sm text-gray-400 mb-2">Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            class="form-input w-full bg-[#1a1a1a] border border-[#333] px-4 py-3 text-white placeholder-gray-600 transition-all"
+                            placeholder="Your name"
+                        >
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm text-gray-400 mb-2">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            class="form-input w-full bg-[#1a1a1a] border border-[#333] px-4 py-3 text-white placeholder-gray-600 transition-all"
+                            placeholder="you@example.com"
+                        >
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label for="project-type" class="block text-sm text-gray-400 mb-2">Project Type</label>
+                    <select
+                        id="project-type"
+                        name="project-type"
+                        class="form-input w-full bg-[#1a1a1a] border border-[#333] px-4 py-3 text-white transition-all cursor-pointer"
+                    >
+                        <option value="" disabled selected>Select a project type</option>
+                        <option value="web-design">Web Design & Development</option>
+                        <option value="application">Application Development</option>
+                        <option value="systems">Systems & Data</option>
+                        <option value="other">Something Else</option>
+                    </select>
+                </div>
+
+                <div class="mb-8">
+                    <label for="message" class="block text-sm text-gray-400 mb-2">Tell me about your project</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="5"
+                        required
+                        class="form-input w-full bg-[#1a1a1a] border border-[#333] px-4 py-3 text-white placeholder-gray-600 transition-all resize-none"
+                        placeholder="What problem are you trying to solve?"
+                    ></textarea>
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn-primary w-full bg-[#8FA68E] text-[#1a1a1a] py-4 font-bold text-sm uppercase tracking-wider hover:bg-[#6B8069] transition-colors"
+                >
+                    Send Message
+                </button>
+
+                <p class="text-center text-sm text-gray-600 mt-6">
+                    Or email directly:
+                    <a href="mailto:systems@lueken-good.design" class="text-[#8FA68E] hover:underline">
+                        systems@lueken-good.design
+                    </a>
+                </p>
+            </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-[#333]">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <p class="text-sm text-gray-500">
+                        &copy; 2025 Lueken Good Design. All systems nominal.
+                    </p>
+                    <p class="text-xs text-gray-600 mt-1">
+                        Sustainable systems designed for longevity.
+                    </p>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/lueken" target="_blank" rel="noopener" class="text-gray-500 hover:text-[#8FA68E] transition-colors">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/in/YOUR_USERNAME" target="_blank" rel="noopener" class="text-gray-500 hover:text-[#8FA68E] transition-colors">
+                        <span class="sr-only">LinkedIn</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
     </footer>
 
+    <!-- Scroll Reveal + Form Handling Script -->
     <script>
-        // Simple JS to add a class on scroll for the reveal effect.
-        // It's a system that adds a state (is-visible) when conditions are met.
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll reveal animation
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); // Unobserve once it's visible.
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
                     }
                 });
             }, {
-                rootMargin: "0px",
-                threshold: 0.2 // Trigger when 20% of the element is visible
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
             });
 
-            // Iterate over all elements we want to reveal
-            document.querySelectorAll('.reveal-element').forEach(element => {
-                observer.observe(element);
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Contact form handling
+            const form = document.getElementById('contact-form');
+            const wrapper = document.getElementById('contact-form-wrapper');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        wrapper.innerHTML = `
+                            <div class="text-center py-12">
+                                <div class="w-16 h-16 bg-[#8FA68E]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <svg class="w-8 h-8 text-[#8FA68E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-semibold mb-4 font-['Lora']">Message Sent</h3>
+                                <p class="text-gray-400 mb-6">Thanks for reaching out. I'll get back to you soon.</p>
+                                <p class="text-sm text-gray-600">
+                                    Or email directly:
+                                    <a href="mailto:systems@lueken-good.design" class="text-[#8FA68E] hover:underline">
+                                        systems@lueken-good.design
+                                    </a>
+                                </p>
+                            </div>
+                        `;
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                } catch (error) {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    alert('Something went wrong. Please try again or email directly.');
+                }
             });
         });
     </script>
+
 </body>
 </html>
