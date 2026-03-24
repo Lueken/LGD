@@ -79,27 +79,79 @@
         }
 
         /* Button hover effect */
-        .btn-primary {
+        /* Oil-slick iridescent buttons */
+        /* Chromatic aberration — dark backgrounds */
+        .btn-chroma-dark {
             position: relative;
             overflow: hidden;
         }
-        .btn-primary::before {
+        .btn-chroma-dark::before,
+        .btn-chroma-dark::after {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font: inherit;
+            letter-spacing: inherit;
+            text-transform: inherit;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .btn-chroma-dark::before {
+            color: rgba(255, 60, 60, 0.6);
+            transform: translate(-2px, 0);
+            mix-blend-mode: screen;
+        }
+        .btn-chroma-dark::after {
+            color: rgba(60, 100, 255, 0.6);
+            transform: translate(2px, 0);
+            mix-blend-mode: screen;
+        }
+        .btn-chroma-dark:hover::before,
+        .btn-chroma-dark:hover::after {
+            opacity: 1;
+        }
+
+        /* Shimmer sweep — sage/light buttons */
+        .btn-shimmer {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-shimmer::after {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
-            width: 100%;
+            width: 50%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(
+                105deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.35) 50%,
+                transparent 70%
+            );
+            pointer-events: none;
         }
-        .btn-primary:hover::before {
-            left: 100%;
+        .btn-shimmer:hover::after {
+            animation: shimmer 0.6s ease forwards;
+        }
+        .btn-shimmer:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(143, 166, 142, 0.35);
+        }
+        @keyframes shimmer {
+            to { left: 150%; }
         }
 
         /* Portfolio card hover */
         .portfolio-card {
             transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
         }
         .portfolio-card:hover {
             transform: translateY(-8px);
@@ -121,6 +173,37 @@
             height: 100%;
         }
 
+        /* Chromatic aberration on service icons */
+        .service-card .icon-wrap {
+            position: relative;
+        }
+        .service-card .icon-wrap::before,
+        .service-card .icon-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: inherit;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+        .service-card .icon-wrap::before {
+            background: rgba(255, 60, 60, 0.15);
+        }
+        .service-card .icon-wrap::after {
+            background: rgba(60, 60, 255, 0.15);
+        }
+        .service-card:hover .icon-wrap::before {
+            opacity: 1;
+            transform: translate(-3px, -1px);
+        }
+        .service-card:hover .icon-wrap::after {
+            opacity: 1;
+            transform: translate(3px, 1px);
+        }
+
         /* Form focus states */
         .form-input:focus {
             outline: none;
@@ -140,7 +223,7 @@
         /* Browser frame for portfolio */
         .browser-frame {
             background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
-            border-radius: 8px;
+            border-radius: 8px 8px 0 0;
             overflow: hidden;
         }
         .browser-dots {
@@ -148,7 +231,6 @@
             gap: 6px;
             padding: 12px 16px;
             background: #2a2a2a;
-            border-bottom: 1px solid #333;
         }
         .browser-dots span {
             width: 10px;
@@ -194,13 +276,13 @@
                 </p>
 
                 <div class="flex flex-wrap gap-4 reveal reveal-delay-3">
-                    <a href="#work" class="btn-primary inline-flex items-center gap-2 bg-[#8FA68E] text-[#1a1a1a] px-8 py-4 font-bold text-sm uppercase tracking-wider hover:bg-[#6B8069] transition-colors">
+                    <a href="#work" class="btn-shimmer inline-flex items-center gap-2 bg-[#8FA68E] text-[#1a1a1a] px-8 py-4 font-bold text-sm uppercase tracking-wider transition-colors">
                         View Work
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
                         </svg>
                     </a>
-                    <a href="#contact" class="inline-flex items-center gap-2 border border-gray-600 text-gray-300 px-8 py-4 font-bold text-sm uppercase tracking-wider hover:border-[#8FA68E] hover:text-[#8FA68E] transition-colors">
+                    <a href="#contact" class="btn-chroma-dark inline-flex items-center gap-2 border border-gray-600 text-gray-300 px-8 py-4 font-bold text-sm uppercase tracking-wider transition-colors" data-text="Let's Talk">
                         Let's Talk
                     </a>
                 </div>
@@ -210,7 +292,7 @@
                     <div class="flex items-center gap-6 text-sm text-gray-500">
                         <div class="flex items-center gap-2">
                             <span class="w-2 h-2 bg-[#8FA68E] rounded-full"></span>
-                            <span>SaaS platform in production</span>
+                            <span>SaaS platform &amp; mobile apps in production</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="w-2 h-2 bg-[#8FA68E] rounded-full"></span>
@@ -231,23 +313,28 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Project 1: Aisle to Islands -->
-                <a href="https://aisle-to-islands.com" target="_blank" rel="noopener" class="portfolio-card block bg-[#1a1a1a] border border-[#333] reveal">
+                <!-- Project: Tended -->
+                <a href="https://tended.church" target="_blank" rel="noopener" class="portfolio-card block bg-[#1a1a1a] border border-[#333] md:col-span-2 reveal">
                     <div class="browser-frame">
                         <div class="browser-dots">
                             <span></span><span></span><span></span>
                         </div>
-                        <img src="images/portfolio/AnI.png" alt="Aisle to Islands - Luxury destination wedding planning website" class="w-full aspect-video object-cover object-top">
+                        <img src="images/portfolio/tended.png" alt="Tended - Pastoral care accountability software for churches" class="w-full aspect-[2.2/1] object-cover object-top">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Aisle to Islands</h3>
-                        <p class="text-gray-400 text-sm mb-4">Luxury destination wedding and honeymoon planning. Complete brand identity, custom design system, SEO optimization.</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Custom Design</span>
-                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">SEO</span>
-                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Performance</span>
+                        <div class="flex items-center gap-3 mb-2">
+                            <h3 class="text-xl font-semibold">Tended</h3>
+                            <span class="px-2 py-0.5 bg-[#8FA68E]/15 text-[#8FA68E] text-[10px] uppercase tracking-wider font-bold">Live Product</span>
                         </div>
-                        <span class="text-[#8FA68E] text-sm inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                        <p class="text-gray-400 text-sm mb-4 max-w-2xl">Pastoral care accountability platform. Drift detection, leadership dashboards, staff engagement tracking, and mobile apps — helping churches notice who's slipping through the cracks before it's too late.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Full-Stack SaaS</span>
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Laravel</span>
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Flutter</span>
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">PostgreSQL</span>
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Stripe</span>
+                        </div>
+                        <span class="text-[#8FA68E] text-sm inline-flex items-center gap-2">
                             Visit Site
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -256,8 +343,8 @@
                     </div>
                 </a>
 
-                <!-- Project 2: Mise en Place -->
-                <a href="https://mise-en-place.recipes" target="_blank" rel="noopener" class="portfolio-card block bg-[#1a1a1a] border border-[#333] reveal reveal-delay-1">
+                <!-- Project: Mise en Place -->
+                <a href="https://mise-en-place.recipes" target="_blank" rel="noopener" class="portfolio-card block bg-[#1a1a1a] border border-[#333] reveal">
                     <div class="browser-frame">
                         <div class="browser-dots">
                             <span></span><span></span><span></span>
@@ -280,6 +367,31 @@
                         </span>
                     </div>
                 </a>
+
+                <!-- Project: Aisle to Islands -->
+                <a href="https://aisle-to-islands.com" target="_blank" rel="noopener" class="portfolio-card block bg-[#1a1a1a] border border-[#333] reveal reveal-delay-1">
+                    <div class="browser-frame">
+                        <div class="browser-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <img src="images/portfolio/AnI.png" alt="Aisle to Islands - Luxury destination wedding planning website" class="w-full aspect-video object-cover object-top">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Aisle to Islands</h3>
+                        <p class="text-gray-400 text-sm mb-4">Luxury destination wedding and honeymoon planning. Complete brand identity, custom design system, SEO optimization.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Custom Design</span>
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">SEO</span>
+                            <span class="px-3 py-1 bg-[#242424] text-xs text-gray-400 uppercase tracking-wider">Performance</span>
+                        </div>
+                        <span class="text-[#8FA68E] text-sm inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Visit Site
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </span>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -295,35 +407,7 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Service 1 -->
                 <div class="service-card relative bg-[#1a1a1a] border border-[#333] p-8 reveal">
-                    <div class="w-12 h-12 bg-[#8FA68E]/10 flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-[#8FA68E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-4">Web Design & Development</h3>
-                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-                        Custom websites that reflect your brand. No templates, no page builders.
-                        Hand-crafted code that performs and converts.
-                    </p>
-                    <ul class="space-y-2 text-sm text-gray-500">
-                        <li class="flex items-center gap-2">
-                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
-                            Complete brand integration
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
-                            SEO & performance optimization
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
-                            Mobile-first responsive design
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Service 2 -->
-                <div class="service-card relative bg-[#1a1a1a] border border-[#333] p-8 reveal reveal-delay-1">
-                    <div class="w-12 h-12 bg-[#8FA68E]/10 flex items-center justify-center mb-6">
+                    <div class="icon-wrap w-12 h-12 bg-[#8FA68E]/10 flex items-center justify-center mb-6">
                         <svg class="w-6 h-6 text-[#8FA68E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                         </svg>
@@ -349,9 +433,37 @@
                     </ul>
                 </div>
 
+                <!-- Service 2 -->
+                <div class="service-card relative bg-[#1a1a1a] border border-[#333] p-8 reveal reveal-delay-1">
+                    <div class="icon-wrap w-12 h-12 bg-[#8FA68E]/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-[#8FA68E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Web Design & Development</h3>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        Custom websites that reflect your brand. No templates, no page builders.
+                        Hand-crafted code that performs and converts.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            Complete brand integration
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            SEO & performance optimization
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="w-1 h-1 bg-[#8FA68E] rounded-full"></span>
+                            Mobile-first responsive design
+                        </li>
+                    </ul>
+                </div>
+
                 <!-- Service 3 -->
                 <div class="service-card relative bg-[#1a1a1a] border border-[#333] p-8 reveal reveal-delay-2">
-                    <div class="w-12 h-12 bg-[#8FA68E]/10 flex items-center justify-center mb-6">
+                    <div class="icon-wrap w-12 h-12 bg-[#8FA68E]/10 flex items-center justify-center mb-6">
                         <svg class="w-6 h-6 text-[#8FA68E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
                         </svg>
@@ -510,7 +622,7 @@
 
                 <button
                     type="submit"
-                    class="btn-primary w-full bg-[#8FA68E] text-[#1a1a1a] py-4 font-bold text-sm uppercase tracking-wider hover:bg-[#6B8069] transition-colors"
+                    class="btn-shimmer btn-primary w-full bg-[#8FA68E] text-[#1a1a1a] py-4 font-bold text-sm uppercase tracking-wider hover:bg-[#6B8069] transition-colors"
                 >
                     Send Message
                 </button>
@@ -532,7 +644,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="text-center md:text-left">
                     <p class="text-sm text-gray-500">
-                        &copy; 2025 Lueken Good Design. All systems nominal.
+                        &copy; 2025 Lueken Good Design LLC. All systems nominal.
                     </p>
                     <p class="text-xs text-gray-600 mt-1">
                         Sustainable systems designed for longevity.
